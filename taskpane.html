@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <title>Tabela pytań Familijna</title>
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script src="taskpane.js?v=1.0.2"></script>
+<meta charset="utf-8" />
+<title>Formularz akceptacji zmiany</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="taskpane.js?v=1.0.2"></script>
+<style>
+body { font-family: Segoe UI, Arial, sans-serif; padding:16px; margin:0; color:#222; }
+h2 { margin:0 0 12px 0; font-size:21px; }
+.version { font-size:12px; color:#666; margin-bottom:14px; }
+button { width:100%; padding:12px; font-size:15px; cursor:pointer; margin-top:10px; border:1px solid #999; border-radius:4px; background:#fff; }
+button.primary { background:#df292f; color:white; border-color:#df292f; font-weight:600; }
+.option { margin:14px 0 12px 0; font-size:14px; }
+.hint { color:#666; font-size:12px; margin-top:12px; line-height:1.4; }
+#status { margin-top:14px; font-size:12px; line-height:1.45; }
+#status.error { color:#b00020; }
+#status.ok { color:#107c10; }
+textarea { width:100%; box-sizing:border-box; min-height:220px; font-family:Segoe UI,Arial,sans-serif; font-size:13px; padding:8px; }
+</style>
 </head>
 <body>
-  <h2>Tabela pytań Familijna</h2>
-  <textarea id="questions"></textarea>
-  <button id="insertTable">Wstaw tabelę pytań</button>
-  <button id="resetQuestions">Przywróć pytania</button>
-  <div id="status"></div>
+<h2>Formularz akceptacji zmiany</h2>
+<div class="version">Wersja dodatku: 1.0.2</div>
+
+<div class="option">Pytania (po jednym wierszu):</div>
+<textarea id="questions"></textarea>
+
+<button id="insertTable" class="primary">Wstaw formularz</button>
+<button id="resetQuestions">Przywróć pytania</button>
+
+<p class="hint">
+Po kliknięciu formularz zostanie wstawiony do treści wiadomości.
+Odbiorca uzupełnia kolumnę „Odpowiedź TAK/NIE”.
+</p>
+
+<div id="status"></div>
 </body>
 </html>

@@ -1,4 +1,3 @@
-/* Tabela pytań Familijna v1.0 */
 Office.onReady(function () {
   const insertButton = document.getElementById("insertTable");
   const resetButton = document.getElementById("resetQuestions");
@@ -6,7 +5,7 @@ Office.onReady(function () {
   if (insertButton) insertButton.onclick = insertQuestionsTable;
   if (resetButton) resetButton.onclick = resetQuestions;
 
-  setStatus("Dodatek gotowy.", false);
+  resetQuestions();
 });
 
 const DEFAULT_QUESTIONS = [
@@ -16,89 +15,42 @@ const DEFAULT_QUESTIONS = [
   "Czy potwierdzasz, że bierzesz odpowiedzialność biznesową za zasadność zgłoszonej zmiany oraz za skutki wynikające z jej wdrożenia?"
 ];
 
-function setStatus(message, isError) {
-  const status = document.getElementById("status");
-  if (!status) return;
-  status.textContent = message || "";
-  status.className = isError ? "error" : "ok";
-}
-
-function htmlEncode(value) {
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+function setStatus(message) {
+  const s = document.getElementById("status");
+  if (s) s.textContent = message;
 }
 
 function getQuestions() {
   const textarea = document.getElementById("questions");
-  const raw = textarea ? textarea.value : "";
-  return raw
-    .split(/\r?\n/)
-    .map(x => x.trim())
-    .filter(Boolean);
+  return textarea.value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
 }
 
 function buildQuestionsTableHtml(questions) {
-  const rows = questions.map((q, index) => `
-    <tr>
-      <td style="border:1px solid #cccccc;padding:7px 9px;font-size:10.5pt;line-height:14px;color:#222;">
-        ${index + 1}. ${htmlEncode(q)}
-      </td>
-      <td style="border:1px solid #cccccc;padding:7px 9px;font-size:10.5pt;line-height:14px;color:#222;width:150px;text-align:center;">
-        &nbsp;
-      </td>
-    </tr>`).join("");
+  const rows = questions.map((q, i) => `
+<tr>
+<td style="border:1px solid #cccccc;padding:7px 9px;">${i+1}. ${q}</td>
+<td style="border:1px solid #cccccc;padding:7px 9px;width:150px;text-align:center;">&nbsp;</td>
+</tr>`).join("");
 
   return `
-    <div style="font-family:Calibri,Arial,sans-serif;color:#222;margin:0;padding:0;">
-      <p style="margin:0 0 8px 0;font-size:11pt;line-height:15px;">
-        Prosimy o uzupełnienie odpowiedzi w poniższej tabeli:
-      </p>
-      <table cellpadding="0" cellspacing="0" border="0" width="650"
-             style="width:650px;border-collapse:collapse;font-family:Calibri,Arial,sans-serif;">
-        <tr>
-          <td style="border:1px solid #DF292F;background:#DF292F;color:#ffffff;padding:7px 9px;font-size:10.5pt;font-weight:bold;">
-            Pytanie
-          </td>
-          <td style="border:1px solid #DF292F;background:#DF292F;color:#ffffff;padding:7px 9px;font-size:10.5pt;font-weight:bold;width:150px;text-align:center;">
-            Odpowiedź TAK/NIE
-          </td>
-        </tr>
-        ${rows}
-      </table>
-      <p style="margin:8px 0 0 0;font-size:9pt;color:#666;line-height:13px;">
-        W kolumnie „Odpowiedź TAK/NIE” prosimy wpisać TAK albo NIE.
-      </p>
-    </div><br>`;
+<table cellpadding="0" cellspacing="0" border="0" width="760" style="width:760px;border-collapse:collapse;">
+<tr>
+<td style="border:1px solid #DF292F;background:#DF292F;color:#fff;padding:7px 9px;font-weight:bold;">Pytanie</td>
+<td style="border:1px solid #DF292F;background:#DF292F;color:#fff;padding:7px 9px;font-weight:bold;width:150px;text-align:center;">Odpowiedź TAK/NIE</td>
+</tr>
+${rows}
+</table><br>`;
 }
 
 function insertQuestionsTable() {
-  const questions = getQuestions();
-  if (!questions.length) {
-    setStatus("Brak pytań do wstawienia.", true);
-    return;
-  }
-
-  const html = buildQuestionsTableHtml(questions);
-
+  const html = buildQuestionsTableHtml(getQuestions());
   Office.context.mailbox.item.body.setSelectedDataAsync(
     html,
-    { coercionType: Office.CoercionType.Html },
-    function (result) {
-      if (result.status === Office.AsyncResultStatus.Succeeded) {
-        setStatus("Tabela pytań została wstawiona.", false);
-      } else {
-        const msg = result.error && result.error.message ? result.error.message : "Nieznany błąd Outlook API.";
-        setStatus("Nie udało się wstawić tabeli: " + msg, true);
-      }
-    }
+    { coercionType: Office.CoercionType.Html }
   );
 }
 
 function resetQuestions() {
   const textarea = document.getElementById("questions");
   if (textarea) textarea.value = DEFAULT_QUESTIONS.join("\n");
-  setStatus("Przywrócono przykładowe pytania.", false);
 }

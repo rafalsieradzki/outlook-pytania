@@ -4,37 +4,13 @@
   <meta charset="utf-8" />
   <title>Tabela pytań Familijna</title>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script src="taskpane.js?v=1.0.0.0"></script>
-  <style>
-    body { font-family: Segoe UI, Arial, sans-serif; padding:16px; margin:0; color:#222; }
-    h2 { margin:0 0 8px 0; font-size:20px; }
-    .version { color:#666; font-size:12px; margin-bottom:14px; }
-    button { width:100%; padding:12px; margin-top:10px; border:1px solid #999; border-radius:4px; background:#fff; cursor:pointer; font-size:15px; }
-    button.primary { background:#DF292F; color:#fff; border-color:#DF292F; font-weight:600; }
-    textarea { width:100%; box-sizing:border-box; min-height:170px; font-family:Segoe UI, Arial, sans-serif; font-size:13px; padding:8px; }
-    .hint { color:#666; font-size:12px; line-height:1.4; margin-top:10px; }
-    #status { margin-top:12px; font-size:12px; white-space:pre-wrap; }
-    #status.ok { color:#107c10; }
-    #status.error { color:#b00020; }
-  </style>
+  <script src="taskpane.js?v=1.0.2"></script>
 </head>
 <body>
   <h2>Tabela pytań Familijna</h2>
-  <div class="version">Wersja 1.0.0.0</div>
-
-  <label for="questions">Pytania, po jednym w wierszu:</label>
-  <textarea id="questions">Czy akceptują Państwo termin realizacji?
-Czy dane do faktury są poprawne?
-Czy zamówienie może zostać uruchomione?
-Czy potwierdzają Państwo zakres zamówienia?</textarea>
-
-  <button id="insertTable" class="primary">Wstaw tabelę pytań</button>
-  <button id="resetQuestions">Przywróć przykładowe pytania</button>
-
-  <p class="hint">
-    Tabela zostanie wstawiona do treści wiadomości. Odbiorca wpisuje w drugiej kolumnie TAK albo NIE.
-  </p>
-
+  <textarea id="questions"></textarea>
+  <button id="insertTable">Wstaw tabelę pytań</button>
+  <button id="resetQuestions">Przywróć pytania</button>
   <div id="status"></div>
 </body>
 </html>

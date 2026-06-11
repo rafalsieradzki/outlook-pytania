@@ -10,10 +10,10 @@ Office.onReady(function () {
 });
 
 const DEFAULT_QUESTIONS = [
-  "Czy akceptują Państwo termin realizacji?",
-  "Czy dane do faktury są poprawne?",
-  "Czy zamówienie może zostać uruchomione?",
-  "Czy potwierdzają Państwo zakres zamówienia?"
+  "Czy potwierdzasz, że zmiana została omówiona i zaakceptowana przez Członka Zarządu?",
+  "Czy potwierdzasz, że przed zgłoszeniem zmiany skonsultowano z osobami lub działami, na które może mieć wpływ i potwierdzono zrozumienie tych zmian?",
+  "Czy potwierdzasz, że rozumiesz i wiesz, jak zmiana wpłynie na dane, raporty, dokumenty, procesy biznesowe, rozliczenia i sposób działania systemu?",
+  "Czy potwierdzasz, że bierzesz odpowiedzialność biznesową za zasadność zgłoszonej zmiany oraz za skutki wynikające z jej wdrożenia?"
 ];
 
 function setStatus(message, isError) {
@@ -47,7 +47,7 @@ function buildQuestionsTableHtml(questions) {
         ${index + 1}. ${htmlEncode(q)}
       </td>
       <td style="border:1px solid #cccccc;padding:7px 9px;font-size:10.5pt;line-height:14px;color:#222;width:150px;text-align:center;">
-        TAK / NIE
+        &nbsp;
       </td>
     </tr>`).join("");
 
